@@ -9,6 +9,8 @@ import android.content.SyncResult;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.google.gson.Gson;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -61,7 +63,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
     public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult) {
         String data ="";
         try {
-            URL url = new URL("http://api.nytimes.com/svc/news/v3/content/all/all/all.json?limit=20&api-key=d1934738c85789ae6e8dac61ddca1abc%3A12%3A74602111");
+            URL url = new URL("http://dev.markitondemand.com/MODApis/Api/v2/Quote/json?symbol=AAPL&callback=myFunction");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.connect();
             InputStream inStream = connection.getInputStream();
@@ -71,9 +73,12 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
         }
 
         Gson gson = new Gson();
-        SearchResult result = gson.fromJson(data,SearchResult.class);
+        StockItem result = gson.fromJson(data,StockItem.class);
+        String Name = result.getName();
+        double LastPrice = result.getLastPrice();
 
-        Log.d(TAG, "Latest story: " + result.getResults().get(0).getTitle());
+        Log.d(TAG, "Company Name: " + result.getName());
+        Log.d(TAG, "Last Price: " + result.getLastPrice());
     }
 
     private String getInputData(InputStream inStream) throws IOException {

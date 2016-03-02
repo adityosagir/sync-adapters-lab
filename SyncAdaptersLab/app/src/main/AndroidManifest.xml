@@ -46,12 +46,13 @@
         </service>
 
         <provider
-            android:name="com.example.asagir.syncadapterslab.StubProvider"
-            android:authorities="ly.generalassemb.drewmahrt.syncadapterexample.StubProvider"
+            android:name=".StubProvider"
+            android:authorities="com.example.asagir.syncadapterslab.StubProvider"
             android:label="my provider"
             android:exported="false"
             android:syncable="true"/>
 
     </application>
+
 
 </manifest>

@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">SyncAdaptersLab</string>
+    <string name="basic_URL">http://dev.markitondemand.com/Api/v2/Quote</string>
+    <string name="apple_URL">http://dev.markitondemand.com/MODApis/Api/v2/Quote/json?symbol=AAPL&amp;callback=myFunction</string>
 </resources>
