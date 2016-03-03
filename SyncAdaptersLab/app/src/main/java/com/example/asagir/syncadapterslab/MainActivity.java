@@ -4,9 +4,8 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.content.ContentResolver;
 import android.content.Context;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
@@ -23,6 +22,9 @@ public static final String ACCOUNT_TYPE = "example.com";
 public static final String ACCOUNT = "default_account";
 
         Account mAccount;
+        Button mManualButton;
+        Button mMinuteButton;
+        Button mFiveMinuteButton;
 
         // Global variables
         // A content resolver for accessing the provider
@@ -35,29 +37,39 @@ protected void onCreate(Bundle savedInstanceState) {
 
         mAccount = createSyncAccount(this);
 
-        Button syncButton = (Button)findViewById(R.id.sync_button);
-        syncButton.setOnClickListener(new View.OnClickListener() {
-@Override
-public void onClick(View v) {
-        Bundle settingsBundle = new Bundle();
-        settingsBundle.putBoolean(
-        ContentResolver.SYNC_EXTRAS_MANUAL, true);
-        settingsBundle.putBoolean(
-        ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
-                /*
-                 * Request the sync for the default account, authority, and
-                 * manual sync settings
-                 */
-        ContentResolver.requestSync(mAccount, AUTHORITY, settingsBundle);
-        }
+        mManualButton = (Button)findViewById(R.id.manual_button);
+        mManualButton.setOnClickListener(new View.OnClickListener() {
+        @Override
+            public void onClick(View v) {
+                    Bundle settingsBundle = new Bundle();
+                    settingsBundle.putBoolean(
+                    ContentResolver.SYNC_EXTRAS_MANUAL, true);
+                    settingsBundle.putBoolean(
+                    ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
+                            /*
+                             * Request the sync for the default account, authority, and
+                             * manual sync settings
+                             */
+                    ContentResolver.requestSync(mAccount, AUTHORITY, settingsBundle);
+            }
         });
 
-        ContentResolver.setSyncAutomatically(mAccount,AUTHORITY,true);
-        ContentResolver.addPeriodicSync(
-        mAccount,
-        AUTHORITY,
-        Bundle.EMPTY,
-        60);
+
+        mMinuteButton = (Button)findViewById(R.id.minute_button);
+        mMinuteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ContentResolver.setSyncAutomatically(mAccount, AUTHORITY, true);
+                ContentResolver.addPeriodicSync(
+                        mAccount,
+                        AUTHORITY,
+                        Bundle.EMPTY,
+                        10);
+
+                ContentResolver.requestSync(mAccount, AUTHORITY, null);
+            }
+        });
+
 
         }
 

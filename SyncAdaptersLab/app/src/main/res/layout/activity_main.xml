@@ -8,15 +8,29 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.example.asagir.syncadapterslab.MainActivity">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="200dp">
+        <Button
+            android:id="@+id/manual_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Manual"/>
 
-    <Button
-        android:id="@+id/sync_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sync"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        android:layout_below="@id/sync_button"/>
+        <Button
+            android:id="@+id/minute_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Minute"/>
+
+        <Button
+            android:id="@+id/five_minute_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Five Minute"/>
+
+
+    </LinearLayout>
 </RelativeLayout>
