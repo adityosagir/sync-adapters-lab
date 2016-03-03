@@ -64,14 +64,23 @@ protected void onCreate(Bundle savedInstanceState) {
                         mAccount,
                         AUTHORITY,
                         Bundle.EMPTY,
-                        10);
-
-                ContentResolver.requestSync(mAccount, AUTHORITY, null);
+                        60);
             }
         });
 
-
-        }
+        mFiveMinuteButton = (Button)findViewById(R.id.five_minute_button);
+        mFiveMinuteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ContentResolver.setSyncAutomatically(mAccount, AUTHORITY, true);
+                ContentResolver.addPeriodicSync(
+                        mAccount,
+                        AUTHORITY,
+                        Bundle.EMPTY,
+                        300);
+            }
+        });
+    }
 
 /**
  * Create a new dummy account for the sync adapter

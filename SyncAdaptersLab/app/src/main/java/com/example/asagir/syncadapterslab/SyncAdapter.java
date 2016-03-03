@@ -62,6 +62,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
     @Override
     public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult) {
         String data ="";
+        Gson gson = new Gson();
         try {
             URL url = new URL("http://dev.markitondemand.com/MODApis/Api/v2/Quote/json?symbol=AAPL&callback=myFunction");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -72,13 +73,43 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
             e.printStackTrace();
         }
 
-        Gson gson = new Gson();
-        StockItem result = gson.fromJson(data,StockItem.class);
-        String Name = result.getName();
-        double LastPrice = result.getLastPrice();
+        StockItem APPL = gson.fromJson(data,StockItem.class);
+        String APPLName = APPL.getName();
+        double APPLLastPrice = APPL.getLastPrice();
 
-        Log.d(TAG, "Company Name: " + result.getName());
-        Log.d(TAG, "Last Price: " + result.getLastPrice());
+        Log.d(TAG, "Company Name: " + APPLName + " Is Posting A Last Stock Price of $" + APPLLastPrice);
+
+        try {
+            URL url = new URL("http://dev.markitondemand.com/MODApis/Api/v2/Quote/json?symbol=GE&callback=myFunction");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.connect();
+            InputStream inStream = connection.getInputStream();
+            data = getInputData(inStream);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+
+        StockItem GE = gson.fromJson(data,StockItem.class);
+        String GEName = GE.getName();
+        double GELastPrice = GE.getLastPrice();
+
+        Log.d(TAG, "Company Name: " + GEName + " Is Posting A Last Stock Price of $" + GELastPrice);
+
+        try {
+            URL url = new URL("http://dev.markitondemand.com/MODApis/Api/v2/Quote/json?symbol=MSFT&callback=myFunction");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.connect();
+            InputStream inStream = connection.getInputStream();
+            data = getInputData(inStream);
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
+
+        StockItem MSFT = gson.fromJson(data,StockItem.class);
+        String MSFTName = MSFT.getName();
+        double MSFTLastPrice = MSFT.getLastPrice();
+
+        Log.d(TAG, "Company Name: " + MSFTName + " Is Posting A Last Stock Price of $" + MSFTLastPrice);
     }
 
     private String getInputData(InputStream inStream) throws IOException {
