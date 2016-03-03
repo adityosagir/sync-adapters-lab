@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,16 +7,46 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.asagir.syncadapterslab.MainActivity">
+    android:orientation="vertical"
+    tools:context="com.example.asagir.syncadapterslab.MainActivity"
+              android:textAlignment="center"
+              android:weightSum="1">
 
-    <Button
-        android:id="@+id/sync_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sync"/>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        android:layout_below="@id/sync_button"/>
-</RelativeLayout>
+        android:id="@+id/app_description_textview"
+        android:text="Click the buttons below to get up-to-date stock values by last price. The manual button offers this data from Apple, the minute button offers the same for GE updated every minute, and five minute button will provide the current last price for Microsoft updated every 5 minutes"
+        android:layout_weight="0.18"
+        android:textColor="@android:color/black"
+        android:textSize="20sp"
+        android:textAlignment="center"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+        <Button
+            android:id="@+id/manual_button"
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            android:text="Manual"/>
+
+        <Button
+            android:id="@+id/minute_button"
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:text="Minute"/>
+
+        <Button
+            android:id="@+id/five_minute_button"
+            android:layout_width="wrap_content"
+            android:layout_height="80dp"
+            android:text="Five Minute"/>
+
+
+    </LinearLayout>
+</LinearLayout>
