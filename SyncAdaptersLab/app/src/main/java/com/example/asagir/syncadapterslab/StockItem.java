@@ -16,8 +16,11 @@ public class StockItem {
         Name = name;
     }
 
-    public double getLastPrice() {return LastPrice;}
+    public double getLastPrice() {
+        return LastPrice;
+    }
 
-    public void setLastPrice(double lastPrice) {LastPrice = lastPrice;
+    public void setLastPrice(double lastPrice) {
+        LastPrice = lastPrice;
     }
 }

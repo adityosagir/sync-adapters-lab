@@ -12,68 +12,99 @@ import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
-private static final String TAG = MainActivity.class.getCanonicalName();
+    private static final String TAG = MainActivity.class.getCanonicalName();
 
-// Constants
+    // Constants
 // Content provider authority
-public static final String AUTHORITY = "com.example.asagir.syncadapterslab.StubProvider";
-// Account type
-public static final String ACCOUNT_TYPE = "example.com";
-// Account
-public static final String ACCOUNT = "default_account";
+    public static final String AUTHORITY = "com.example.asagir.syncadapterslab.StubProvider";
+    // Account type
+    public static final String ACCOUNT_TYPE = "example.com";
+    // Account
+    public static final String ACCOUNT = "default_account";
 
-        Account mAccount;
+    Account mAccount;
 
-        // Global variables
-        // A content resolver for accessing the provider
-        ContentResolver mResolver;
+    // Global variables
+    // A content resolver for accessing the provider
+    ContentResolver mResolver;
 
-@Override
-protected void onCreate(Bundle savedInstanceState) {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         mAccount = createSyncAccount(this);
 
-        Button syncButton = (Button)findViewById(R.id.sync_button);
+        Button syncButton = (Button) findViewById(R.id.sync_button);
         syncButton.setOnClickListener(new View.OnClickListener() {
-@Override
-public void onClick(View v) {
-        Bundle settingsBundle = new Bundle();
-        settingsBundle.putBoolean(
-        ContentResolver.SYNC_EXTRAS_MANUAL, true);
-        settingsBundle.putBoolean(
-        ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
+            @Override
+            public void onClick(View v) {
+                Bundle settingsBundle = new Bundle();
+                settingsBundle.putBoolean(
+                        ContentResolver.SYNC_EXTRAS_MANUAL, true);
+                settingsBundle.putBoolean(
+                        ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
                 /*
                  * Request the sync for the default account, authority, and
                  * manual sync settings
                  */
-        ContentResolver.requestSync(mAccount, AUTHORITY, settingsBundle);
-        }
+                ContentResolver.requestSync(mAccount, AUTHORITY, settingsBundle);
+            }
         });
 
-        ContentResolver.setSyncAutomatically(mAccount,AUTHORITY,true);
+        Button autoSyncButton = (Button) findViewById(R.id.auto_sync_button);
+        autoSyncButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle settingsBundle = new Bundle();
+                settingsBundle.putBoolean(
+                        ContentResolver.SYNC_EXTRAS_MANUAL, true);
+                settingsBundle.putBoolean(
+                        ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
+
+                int secs = 60;
+                ContentResolver.addPeriodicSync(mAccount, AUTHORITY, new Bundle(), secs);
+
+            }
+        });
+
+        Button autoFiveSyncButton = (Button) findViewById(R.id.auto_five_sync_button);
+        autoFiveSyncButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle settingsBundle = new Bundle();
+                settingsBundle.putBoolean(
+                        ContentResolver.SYNC_EXTRAS_MANUAL, true);
+                settingsBundle.putBoolean(
+                        ContentResolver.SYNC_EXTRAS_EXPEDITED, true);
+
+                int secs = 300;
+                ContentResolver.addPeriodicSync(mAccount, AUTHORITY, new Bundle(), secs);
+            }
+        });
+
+        ContentResolver.setSyncAutomatically(mAccount, AUTHORITY, true);
         ContentResolver.addPeriodicSync(
-        mAccount,
-        AUTHORITY,
-        Bundle.EMPTY,
-        60);
+                mAccount,
+                AUTHORITY,
+                Bundle.EMPTY,
+                60);
 
-        }
+    }
 
-/**
- * Create a new dummy account for the sync adapter
- *
- * @param context The application context
- */
-public static Account createSyncAccount(Context context) {
+    /**
+     * Create a new dummy account for the sync adapter
+     *
+     * @param context The application context
+     */
+    public static Account createSyncAccount(Context context) {
         // Create the account type and default account
         Account newAccount = new Account(
-        ACCOUNT, ACCOUNT_TYPE);
+                ACCOUNT, ACCOUNT_TYPE);
         // Get an instance of the Android account manager
         AccountManager accountManager =
-        (AccountManager) context.getSystemService(
-        ACCOUNT_SERVICE);
+                (AccountManager) context.getSystemService(
+                        ACCOUNT_SERVICE);
         /*
          * Add the account and account type, no password or user data
          * If successful, return the Account object, otherwise report an error.
@@ -92,5 +123,5 @@ public static Account createSyncAccount(Context context) {
              */
         }
         return newAccount;
-        }
-        }
+    }
+}

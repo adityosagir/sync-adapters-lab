@@ -61,24 +61,29 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
 
     @Override
     public void onPerformSync(Account account, Bundle extras, String authority, ContentProviderClient provider, SyncResult syncResult) {
-        String data ="";
-        try {
-            URL url = new URL("http://dev.markitondemand.com/MODApis/Api/v2/Quote/json?symbol=AAPL&callback=myFunction");
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.connect();
-            InputStream inStream = connection.getInputStream();
-            data = getInputData(inStream);
-        } catch (Throwable e) {
-            e.printStackTrace();
+        String data = "";
+        String[] stocks = {"GOOG", "CY", "PLCM", "FB", "PYPL"};
+        String urlString = "http://dev.markitondemand.com/MODApis/Api/v2/Quote/json?symbol=";
+
+        for (int i = 0; i < stocks.length; i++) {
+            try {
+                URL url = new URL(urlString + stocks[i]);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.connect();
+                InputStream inStream = connection.getInputStream();
+                data = getInputData(inStream);
+            } catch (Throwable e) {
+                e.printStackTrace();
+            }
+
+            Gson gson = new Gson();
+            StockItem result = gson.fromJson(data, StockItem.class);
+            String Name = result.getName();
+            double LastPrice = result.getLastPrice();
+
+            Log.d(TAG, "Company Name: " + result.getName());
+            Log.d(TAG, "Last Price: " + result.getLastPrice());
         }
-
-        Gson gson = new Gson();
-        StockItem result = gson.fromJson(data,StockItem.class);
-        String Name = result.getName();
-        double LastPrice = result.getLastPrice();
-
-        Log.d(TAG, "Company Name: " + result.getName());
-        Log.d(TAG, "Last Price: " + result.getLastPrice());
     }
 
     private String getInputData(InputStream inStream) throws IOException {
@@ -87,7 +92,7 @@ public class SyncAdapter extends AbstractThreadedSyncAdapter {
 
         String data = null;
 
-        while ((data = reader.readLine()) != null){
+        while ((data = reader.readLine()) != null) {
             builder.append(data);
         }
 

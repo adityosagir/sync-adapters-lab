@@ -14,9 +14,22 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Sync"/>
+
+    <Button
+        android:id="@+id/auto_sync_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sync - 1M"/>
+
+    <Button
+        android:id="@+id/auto_five_sync_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sync - 5M"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!"
-        android:layout_below="@id/sync_button"/>
+        android:layout_below="@id/auto_five_sync_button"/>
 </RelativeLayout>
